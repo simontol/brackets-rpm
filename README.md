@@ -3,6 +3,14 @@
 Requires a symlink:
 
     ln -s /usr/lib64/libudev.so.1 /usr/lib64/libudev.so.0
+    
+Run it using the `brackets` command. Alternatively you could symlink the `.desktop` file so it will show up in the menu:
+
+```
+ln -s /opt/brackets/brackets.desktop /usr/share/applications/brackets.desktop
+// OR just for your user
+ln -s /opt/brackets/brackets.desktop ~/.local/share/applications/brackets.desktop
+```
 
 I built this using `alien` and `rpmrebuild`:
 
