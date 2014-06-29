@@ -73,7 +73,8 @@ Make the following changes:
    - `/usr/bin`
    - `/usr/share`
 
-   (Get the full list of filesystem paths with `repoquery -l filesystem`.)
+   Leave the paths that contain subdirectories of those paths, just remove the base filesystem directories.
+   Get the full list of filesystem paths with `repoquery -l filesystem`.
 
 After editing the spec file, the (still-running) `rpmrebuild` command should prompt `continue ? (y/N)`. Enter `y`.
 
