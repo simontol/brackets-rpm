@@ -17,8 +17,10 @@ License:	MIT
 Source0:	brackets-shell-%{version}.tar.gz
 Source1:	brackets-%{version}.tar.gz
 
+Requires:	nodejs,gtk2
 BuildRequires:	npm,nspr,gyp
-Requires:	nodejs,gtk+
+
+AutoReqProv: no
 
 %global _enable_debug_package 0
 %global debug_package %{nil}
