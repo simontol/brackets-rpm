@@ -1,6 +1,6 @@
 Name: 		brackets	
 Version: 	0.44
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary: 	An open source code editor for the web, written in JavaScript, HTML and CSS.
 #Group:		
 License:	MIT
@@ -26,7 +26,6 @@ AutoReqProv: no
 %setup -n brackets-shell
 %setup -T -D -b 1 -n brackets
 
-
 %build
 
 cd %{_builddir}/brackets
@@ -38,16 +37,19 @@ npm install && npm install grunt-cli
 ./node_modules/.bin/grunt setup full-build
 
 %install
-mkdir --parents %{buildroot}%{_datadir}/%{name}
-mkdir --parents %{buildroot}%{_bindir}
-cp -a %{_builddir}/brackets-shell/out/Release/. %{buildroot}%{_datadir}/%{name}
-cp -a %{_builddir}/brackets/dist/. %{buildroot}%{_datadir}/%{name}/www
 
+mkdir --parents %{buildroot}%{_datadir}/%{name}
+cp -a %{_builddir}/brackets-shell/installer/linux/debian/package-root/opt/brackets/. %{buildroot}%{_datadir}/%{name}
+
+mkdir --parents %{buildroot}%{_bindir}
 ln -s %{_datadir}/%{name}/Brackets %{buildroot}%{_bindir}/%{name}
 
 %files
-%{_datadir}/%{name}/
+
+%dir %{_datadir}/%{name}/
 %{_datadir}/%{name}/*
+%attr(755, root, root) %{_datadir}/%{name}/Brackets
+%attr(755, root, root) %{_datadir}/%{name}/Brackets-node
 %attr(755, root, root) %{_bindir}/%{name}
 
 %changelog
