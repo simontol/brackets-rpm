@@ -1,19 +1,12 @@
 Name: 		brackets	
-Version: 	0.43
+Version: 	0.44
 Release:	1%{?dist}
 Summary: 	An open source code editor for the web, written in JavaScript, HTML and CSS.
 #Group:		
 License:	MIT
-#URL:		
-# The source for this package was pulled from upstream's vcs.  Use the
-# following commands to generate the tarball:
-# git clone https://github.com/adobe/brackets.git
-# cd brackets
-# git checkout release-0.43
-# git submodule update --init
-# cd ..
-# rm -rf brackets/.git
-# tar -cvzf brackets-0.43.tar.gz brackets
+URL:		http://brackets.io/
+# The sources for this package were pulled from upstream's vcs.
+# Use the fetch_source.sh to download them.
 Source0:	brackets-shell-%{version}.tar.gz
 Source1:	brackets-%{version}.tar.gz
 
