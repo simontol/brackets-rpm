@@ -11,7 +11,7 @@ Source0:	brackets-shell-%{version}.tar.gz
 Source1:	brackets-%{version}.tar.gz
 
 Requires:	nodejs,gtk2
-BuildRequires:	npm,nspr,gyp
+BuildRequires:	gtk2-devel,npm,nspr,gyp
 
 AutoReqProv: no
 
@@ -31,6 +31,7 @@ AutoReqProv: no
 cd %{_builddir}/brackets
 npm install && npm install grunt-cli
 ./node_modules/.bin/grunt clean less targethtml useminPrepare htmlmin requirejs concat copy usemin
+cp -a src/config.json dist/config.json
 
 cd %{_builddir}/brackets-shell
 npm install && npm install grunt-cli
@@ -42,12 +43,23 @@ mkdir --parents %{buildroot}%{_datadir}/%{name}
 cp -a %{_builddir}/brackets-shell/installer/linux/debian/package-root/opt/brackets/. %{buildroot}%{_datadir}/%{name}
 
 mkdir --parents %{buildroot}%{_bindir}
-ln -s %{_datadir}/%{name}/Brackets %{buildroot}%{_bindir}/%{name}
+ln -sf %{_datadir}/%{name}/brackets %{buildroot}%{_bindir}/%{name}
+
+# set permissions on subdirectories
+find %{buildroot}%{_datadir}/%{name} -type d -exec chmod 755 {} \;
+
+%ifarch x86
+ln -sf /usr/lib/libudev.so.1 %{buildroot}%{_datadir}/%{name}/libudev.so.0
+%endif
+%ifarch x86_64
+ln -sf /usr/lib64/libudev.so.1 %{buildroot}%{_datadir}/%{name}/libudev.so.0
+%endif
 
 %files
 
 %dir %{_datadir}/%{name}/
 %{_datadir}/%{name}/*
+%attr(755, root, root) %{_datadir}/%{name}/brackets
 %attr(755, root, root) %{_datadir}/%{name}/Brackets
 %attr(755, root, root) %{_datadir}/%{name}/Brackets-node
 %attr(755, root, root) %{_bindir}/%{name}
