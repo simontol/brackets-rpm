@@ -11,8 +11,8 @@ URL:		    http://brackets.io/
 Source0:	    brackets-shell-%{version}.tar.gz
 Source1:	    brackets-%{version}.tar.gz
 
-Requires:	    nodejs, gtk2, alsa-lib, gconf
-BuildRequires:	%{requires}, gtk2-devel, npm, nspr, gyp
+Requires:	    nodejs, gtk2, alsa-lib, GConf2
+BuildRequires:  %{requires}, gtk2-devel, npm, nspr, gyp
 
 AutoReqProv:    no
 
