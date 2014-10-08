@@ -1,5 +1,7 @@
 [Brackets](https://github.com/adobe/brackets) rpm package, generated from the `.deb` package.
 
+Call for testing: There is now a [repository providing a native package](https://github.com/jgillich/brackets-rpm/issues/15#issuecomment-58417462).
+
 <a id="setup">
 
 ## Setup
