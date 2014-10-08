@@ -30,7 +30,7 @@ AutoReqProv: no
 
 cd %{_builddir}/brackets
 npm install && npm install grunt-cli
-./node_modules/.bin/grunt clean less targethtml useminPrepare htmlmin requirejs concat copy usemin build-config
+./node_modules/.bin/grunt clean less targethtml useminPrepare htmlmin requirejs concat copy usemin
 
 cd %{_builddir}/brackets-shell
 npm install && npm install grunt-cli
