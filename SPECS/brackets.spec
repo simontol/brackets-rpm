@@ -1,19 +1,20 @@
-Name: 		brackets	
-Version: 	0.44
-Release:	3%{?dist}
-Summary: 	An open source code editor for the web, written in JavaScript, HTML and CSS.
+Name: 		    brackets	
+Version: 	    0.44
+Release:	    4%{?dist}
+Summary: 	    An open source code editor for the web, written in JavaScript, HTML and CSS.
 #Group:		
-License:	MIT
-URL:		http://brackets.io/
+License:	    MIT
+URL:		    http://brackets.io/
+
 # The sources for this package were pulled from upstream's vcs.
 # Use the fetch_source.sh to download them.
-Source0:	brackets-shell-%{version}.tar.gz
-Source1:	brackets-%{version}.tar.gz
+Source0:	    brackets-shell-%{version}.tar.gz
+Source1:	    brackets-%{version}.tar.gz
 
-Requires:	nodejs,gtk2,alsa-lib,gconf
-BuildRequires:	gtk2-devel,npm,nspr,gyp
+Requires:	    nodejs, gtk2, alsa-lib, gconf
+BuildRequires:	%{requires}, gtk2-devel, npm, nspr, gyp
 
-AutoReqProv: no
+AutoReqProv:    no
 
 %global _enable_debug_package 0
 %global debug_package %{nil}
