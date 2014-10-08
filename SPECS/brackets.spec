@@ -1,6 +1,6 @@
 Name: 		    brackets	
 Version: 	    0.44
-Release:	    5%{?dist}
+Release:	    6%{?dist}
 Summary: 	    An open source code editor for the web, written in JavaScript, HTML and CSS.
 #Group:		
 License:	    MIT
@@ -11,7 +11,7 @@ URL:		    http://brackets.io/
 Source0:	    brackets-shell-%{version}.tar.gz
 Source1:	    brackets-%{version}.tar.gz
 
-Requires:	    nodejs, gtk2, alsa-lib, GConf2
+Requires:	    nodejs, gtk2, alsa-lib, GConf2, libgcrypt
 BuildRequires:  %{requires}, gtk2-devel, npm, nspr, gyp
 
 AutoReqProv:    no
@@ -28,6 +28,12 @@ AutoReqProv:    no
 %setup -T -D -b 1 -n brackets
 
 %build
+
+%ifarch x86_64
+LD_PRELOAD=/usr/lib64/libudev.so.1
+%else
+LD_PRELOAD=/usr/lib/libudev.so.1
+%endif
 
 cd %{_builddir}/brackets
 npm install && npm install grunt-cli
@@ -46,14 +52,10 @@ cp -a %{_builddir}/brackets-shell/installer/linux/debian/package-root/opt/bracke
 mkdir --parents %{buildroot}%{_bindir}
 ln -sf %{_datadir}/%{name}/brackets %{buildroot}%{_bindir}/%{name}
 
-# set permissions on subdirectories
-find %{buildroot}%{_datadir}/%{name} -type d -exec chmod 755 {} \;
-
-%ifarch x86
-ln -sf /usr/lib/libudev.so.1 %{buildroot}%{_datadir}/%{name}/libudev.so.0
-%endif
 %ifarch x86_64
 ln -sf /usr/lib64/libudev.so.1 %{buildroot}%{_datadir}/%{name}/libudev.so.0
+%else
+ln -sf /usr/lib/libudev.so.1 %{buildroot}%{_datadir}/%{name}/libudev.so.0
 %endif
 
 %files
