@@ -1,6 +1,6 @@
 Name: 		brackets	
 Version: 	0.44
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary: 	An open source code editor for the web, written in JavaScript, HTML and CSS.
 #Group:		
 License:	MIT
@@ -10,7 +10,7 @@ URL:		http://brackets.io/
 Source0:	brackets-shell-%{version}.tar.gz
 Source1:	brackets-%{version}.tar.gz
 
-Requires:	nodejs,gtk2
+Requires:	nodejs,gtk2,alsa-lib,gconf
 BuildRequires:	gtk2-devel,npm,nspr,gyp
 
 AutoReqProv: no
