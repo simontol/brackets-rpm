@@ -1,8 +1,8 @@
 Name: 		    brackets	
 Version: 	    0.44
-Release:	    6%{?dist}
+Release:	    7%{?dist}
 Summary: 	    An open source code editor for the web, written in JavaScript, HTML and CSS.
-#Group:		
+Group:		    Development/Tools
 License:	    MIT
 URL:		    http://brackets.io/
 
@@ -12,7 +12,7 @@ Source0:	    brackets-shell-%{version}.tar.gz
 Source1:	    brackets-%{version}.tar.gz
 
 Requires:	    nodejs, gtk2, alsa-lib, GConf2, libgcrypt
-BuildRequires:  %{requires}, gtk2-devel, npm, nspr, gyp
+BuildRequires:  %{requires}, gtk2-devel, npm, nspr, gyp, desktop-file-utils
 
 AutoReqProv:    no
 
@@ -48,9 +48,24 @@ npm install && npm install grunt-cli
 
 mkdir --parents %{buildroot}%{_datadir}/%{name}
 cp -a %{_builddir}/brackets-shell/installer/linux/debian/package-root/opt/brackets/. %{buildroot}%{_datadir}/%{name}
+cp -a %{_builddir}/brackets-shell/installer/linux/debian/package-root/usr/share/icons %{buildroot}%{_datadir}/
 
 mkdir --parents %{buildroot}%{_bindir}
 ln -sf %{_datadir}/%{name}/brackets %{buildroot}%{_bindir}/%{name}
+
+mkdir --parents %{buildroot}%{_datadir}/applications
+cat <<EOT >> %{buildroot}%{_datadir}/applications/%{name}.desktop
+[Desktop Entry]
+Name=Brackets
+Type=Application
+Categories=Development
+Exec=brackets %U
+Icon=brackets
+MimeType=text/html;
+Keywords=Text;Editor;Write;Web;Development;
+EOT
+
+desktop-file-install --mode 0644 %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 %ifarch x86_64
 ln -sf /usr/lib64/libudev.so.1 %{buildroot}%{_datadir}/%{name}/libudev.so.0
@@ -58,10 +73,24 @@ ln -sf /usr/lib64/libudev.so.1 %{buildroot}%{_datadir}/%{name}/libudev.so.0
 ln -sf /usr/lib/libudev.so.1 %{buildroot}%{_datadir}/%{name}/libudev.so.0
 %endif
 
+%post
+/bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+
+%postun
+if [ $1 -eq 0 ] ; then
+    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
+    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+fi
+
+%posttrans
+/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+
 %files
 
 %dir %{_datadir}/%{name}/
 %{_datadir}/%{name}/*
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/icons/*/*/*/*.svg
 %attr(755, root, root) %{_datadir}/%{name}/brackets
 %attr(755, root, root) %{_datadir}/%{name}/Brackets
 %attr(755, root, root) %{_datadir}/%{name}/Brackets-node
