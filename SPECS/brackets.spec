@@ -1,6 +1,6 @@
 Name:           brackets
 Version:        0.44
-Release:        8%{?dist}
+Release:        9%{?dist}
 Summary:        An open source code editor for the web, written in JavaScript, HTML and CSS.
 Group:          Development/Tools
 License:        MIT
@@ -75,12 +75,14 @@ ln -sf /usr/lib/libudev.so.1 %{buildroot}%{_datadir}/%{name}/libudev.so.0
 
 %post
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+/usr/bin/update-desktop-database &> /dev/null || :
 
 %postun
 if [ $1 -eq 0 ] ; then
     /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
     /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 fi
+/usr/bin/update-desktop-database &> /dev/null || :
 
 %posttrans
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
