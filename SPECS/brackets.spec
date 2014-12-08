@@ -1,6 +1,6 @@
 Name:           brackets
 Version:        1.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        An open source code editor for the web, written in JavaScript, HTML and CSS.
 Group:          Development/Tools
 License:        MIT
@@ -13,6 +13,8 @@ Source1:        brackets-%{version}.tar.gz
 
 Requires:       nodejs, gtk2, alsa-lib, GConf2, libgcrypt
 BuildRequires:  %{requires}, gtk2-devel, npm, nspr, gyp, desktop-file-utils
+%{?fc21:Requires: compat-libgcrypt}
+%{?fc21:BuildRequires: compat-libgcrypt}
 
 AutoReqProv:    no
 
